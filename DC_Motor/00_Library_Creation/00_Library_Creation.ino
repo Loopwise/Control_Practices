@@ -4,7 +4,7 @@ template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg);
 #include "MBED_RPi_Pico_TimerInterrupt.h"
 
 // MotorDC(ENM, EN1, EN2, ENCA, ENCB)
-MotorDC Motor75(4, 5, 6, 2, 3);
+MotorDC Motor75(10, 9, 8, 2, 3);
 int dutyCycle = 0;
 int dC75 = 0;
 
@@ -15,8 +15,11 @@ void ISR_Velocity();
 void ISR75_A();
 void ISR75_B();
 
-#define TIMER0_INTERVAL_MS 5
+#define TIMER0_INTERVAL_MS 50
 MBED_RPI_PICO_Timer ITimer0(0);
+
+// Global Variables
+long t_start = 0;
 
 void setup(){ 
   ITimer0.attachInterruptInterval(TIMER0_INTERVAL_MS * 1000, ISR_Velocity);
@@ -25,6 +28,11 @@ void setup(){
   Motor75.start(true);
 
   Serial.begin(115200);
+
+  while(!Serial.available());
+  //delay(1000);
+
+  t_start = millis();
 }
 
 void loop(){
@@ -39,7 +47,8 @@ void loop(){
 
     Motor75.set_PWM(dC75);
   }
-  Serial << "Raw Position:" << Motor75.get_RawPosition() << "\tRPM: " << Motor75.get_RPM()<< '\n';
+  Serial << millis() - t_start << ',' << dC75 << ',' << Motor75.get_RPM()<< '\n';
+  delay(10);
 }
 
 void ISR_Velocity(uint alarm_num){

@@ -18,6 +18,14 @@ void ISR75_B();
 #define TIMER0_INTERVAL_MS 5
 MBED_RPI_PICO_Timer ITimer0(0);
 
+// Global Variables
+double X[4], Y[4];
+double a[] = {};
+double b[] = {};
+double Cz;
+
+long t_start = 0;
+
 void setup(){ 
   ITimer0.attachInterruptInterval(TIMER0_INTERVAL_MS * 1000, ISR_Velocity);
   Motor75.begin(PPR75);
@@ -25,6 +33,11 @@ void setup(){
   Motor75.start(true);
 
   Serial.begin(115200);
+
+  while(!Serial.available());
+  //delay(1000);
+
+  t_start = millis();
 }
 
 void loop(){
@@ -39,7 +52,7 @@ void loop(){
 
     Motor75.set_PWM(dC75);
   }
-  Serial << "Raw Position:" << Motor75.get_RawPosition() << "\tRPM: " << Motor75.get_RPM()<< '\n';
+  Serial << millis() - t_start << ',' << dC75 << ',' << Motor75.get_RPM()<< '\n';
 }
 
 void ISR_Velocity(uint alarm_num){

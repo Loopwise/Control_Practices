@@ -1,3 +1,7 @@
+#pragma once
+
+#ifndef MOTORDC_h
+#define MOTORDC_h
 
 #ifndef tMax
 #define tMax 5
@@ -33,3 +37,5 @@ public:
   float get_RPM();
   float get_Position();
 };
+
+#endif
