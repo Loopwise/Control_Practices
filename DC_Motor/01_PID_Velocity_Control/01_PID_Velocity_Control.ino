@@ -14,20 +14,27 @@ const int PPR75 = 3591.84;
 void ISR_Velocity();
 void ISR75_A();
 void ISR75_B();
+double Compute_Cz();
 
 #define TIMER0_INTERVAL_MS 5
 MBED_RPI_PICO_Timer ITimer0(0);
 
 // Global Variables
 double X[4], Y[4];
-double a[] = {};
-double b[] = {};
+double a[] = {0.01499, 0.01199};
+double b[] = {1, -2.485, 1.996, -0.5109};
 double Cz;
 
 long t_start = 0;
 
-void setup(){ 
+void setup(){
+  for(int i = 0; i < 4; i++)
+    X[i] = Y[i] = 0;
+  
+  // Timer Initialization
   ITimer0.attachInterruptInterval(TIMER0_INTERVAL_MS * 1000, ISR_Velocity);
+
+  // Motor Initialization
   Motor75.begin(PPR75);
   Motor75.setup(ISR75_A, ISR75_B);
   Motor75.start(true);
@@ -67,4 +74,8 @@ void ISR75_A(){
 
 void ISR75_B(){
   Motor75.contB++;
+}
+
+double Compute_Cz(){
+
 }
