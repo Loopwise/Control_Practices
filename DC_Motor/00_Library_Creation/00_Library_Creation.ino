@@ -15,7 +15,7 @@ void ISR_Velocity();
 void ISR75_A();
 void ISR75_B();
 
-#define TIMER0_INTERVAL_MS 50
+#define TIMER0_INTERVAL_MS 5
 MBED_RPI_PICO_Timer ITimer0(0);
 
 // Global Variables
@@ -48,7 +48,7 @@ void loop(){
     Motor75.set_PWM(dC75);
   }
   Serial << millis() - t_start << ',' << dC75 << ',' << Motor75.get_RPM()<< '\n';
-  delay(10);
+  delay(5);
 }
 
 void ISR_Velocity(uint alarm_num){

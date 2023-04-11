@@ -7,10 +7,14 @@ load TF.mat
 num = tf2.Numerator;
 den = tf2.Denominator;
 
-sys = tf(num, den)
+sys = tf(num, den);
 
-z = tf('z', 0.01);
-sysd = c2d(sys, 0.01,'zoh');
-C = sysd/(z - 1);
+z = tf('z', 0.005);
+sysd = c2d(sys, 0.005,'zoh');
+C = 1/(sysd*(z - 1));
 
+numd = cell2mat(C.numerator);
+dend = cell2mat(C.denominator);
+
+display(sysd);
 display(C);
