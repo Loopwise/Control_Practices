@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 header = ['cpu_time', 'uC_time', 'pwm', 'vel']
-data = pd.read_csv('data.csv', sep=';',decimal='.')
+data = pd.read_csv('DC_Motor/00_Library_Creation/data.csv', sep=';',decimal='.')
 data.columns.values[:] = header
 n = len(data)
 
@@ -13,7 +13,7 @@ out = np.array(data['vel'])
 
 # Proceso de filtrado (Media Móvil Exponencial)
 S = np.zeros(n)
-alpha = 0.3
+alpha = 0.3 #0.3
 for i in range(n):
     if i == 0:
         S[i] = out[0]
@@ -25,7 +25,7 @@ data_f = np.array([t, inp, S])
 data_f = pd.DataFrame(data_f.T,
                     columns=['time', 'input', 'output'])
 
-data_f.to_csv('filtered_data.csv', index = False)
+data_f.to_csv('DC_Motor/00_Library_Creation/filtered_data.csv', index = False)
 
 # Ploteo
 fig, axs = plt.subplots(2)

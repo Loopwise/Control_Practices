@@ -9,9 +9,10 @@ den = tf2.Denominator;
 
 sys = tf(num, den);
 
+%% Discrete Transfer Function
 z = tf('z', 0.005);
 sysd = c2d(sys, 0.005,'zoh');
-C = 1/(sysd*(z - 1));
+C = 1/(sysd*(z - 1)); % Dead Beat
 
 numd = cell2mat(C.numerator);
 dend = cell2mat(C.denominator);
