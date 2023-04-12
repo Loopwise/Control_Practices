@@ -2,10 +2,8 @@ template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg);
 
 #define DACn DAC1
 #define fs 10 // Frecuencia de muestreo
-#define tf 40 // Tiempo final
-#define tc 10
-#define tm 20
-#define ta 30
+#define tf 80 // Tiempo final
+#define ts 20
 
 const int N = tf*fs + 1; // Número de muestras
 
@@ -14,11 +12,12 @@ long t_start;
 long pwm = 0;
 
 void setup() {
+  pinMode(DACn, OUTPUT);
   analogWriteResolution(12);
   analogReadResolution(12);
+  
+  analogWrite(DACn,0);  // Enables DAC0
 
-  pinMode(DACn, OUTPUT);
-  analogWrite(DACn, 0); 
   Serial.begin(115200);
   t_start = millis();
 
@@ -30,13 +29,9 @@ void loop(){
   for(i = 0; i <= N; i++){
     if(i == 0)
       pwm = 0;
-    else if(i == tc*fs)
+    else if(i == ts*fs)
       pwm = 1023;
-    else if(i == tm*fs)
-      pwm = 2047;
-    else if(i == ta*fs)
-      pwm = 4095;
-    analogWrite(DACn, pwm); // 12 bits resolution -> Max 4095
+    analogWrite(DACn, pwm);
     Serial << i << ", " << pwm << ", " << analogRead(A0) << ", " << analogRead(A1) << '\n';
     delay(1000/fs);
   }

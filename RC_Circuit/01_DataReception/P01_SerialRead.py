@@ -1,16 +1,23 @@
 import serial as ser
 from time import time
 import csv
+import os
 
-f = open('RC_Circuit/data_10hz.csv', 'w', newline='')
+# Path Configuration
+fullpath = os.path.dirname(__file__)
+outfile = "data.csv"
+
+path = lambda filename: os.path.join(fullpath, filename)
+
+f = open(path(outfile), 'w', newline='')
 
 Arduino = ser.Serial('COM4', 115200)
 
 start_time = time()
 t = start_time
 
-fs = 100 # Frecuencia de muestreo
-tf = 40 # Tiempo final
+fs = 10 # Frecuencia de muestreo
+tf = 80 # Tiempo final
 
 N = tf*fs + 1 # Número de muestras
 i = 0

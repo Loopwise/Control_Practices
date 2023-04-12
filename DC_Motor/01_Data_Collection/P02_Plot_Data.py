@@ -1,12 +1,23 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
+# Path Configuration
+fullpath = os.path.dirname(__file__)
+
+infile = "data.csv"
+outfile = "filtered_data.csv"
+
+path = lambda filename: os.path.join(fullpath, filename)
+
+# Load File
 header = ['cpu_time', 'uC_time', 'pwm', 'vel']
-data = pd.read_csv('DC_Motor/00_Library_Creation/data.csv', sep=';',decimal='.')
+data = pd.read_csv(path(infile), sep=';',decimal='.')
 data.columns.values[:] = header
 n = len(data)
 
+# Vector charge
 t = np.array(data['uC_time'])
 inp = np.array(data['pwm']*130/1023)
 out = np.array(data['vel'])
@@ -25,7 +36,7 @@ data_f = np.array([t, inp, S])
 data_f = pd.DataFrame(data_f.T,
                     columns=['time', 'input', 'output'])
 
-data_f.to_csv('DC_Motor/00_Library_Creation/filtered_data.csv', index = False)
+data_f.to_csv(path(outfile), index = False)
 
 # Ploteo
 fig, axs = plt.subplots(2)

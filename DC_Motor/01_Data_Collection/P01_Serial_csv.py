@@ -1,10 +1,21 @@
 import serial as ser
 from time import time
 import csv
+import os
 
+# Path Configuration
+fullpath = os.path.dirname(__file__)
+outfile = "data.csv"
+
+path = lambda filename: os.path.join(fullpath, filename)
+
+f = open(path(outfile), 'w', newline='')
+
+# Serial configuration
 Arduino = ser.Serial('COM13', 115200)
 Arduino.write(b'a')
-f = open('data.csv', 'w', newline='')
+
+# Saving data
 start_time = time()
 t = start_time
 i = 0

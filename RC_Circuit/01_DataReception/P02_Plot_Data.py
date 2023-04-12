@@ -1,9 +1,19 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
+# Path Configuration
+fullpath = os.path.dirname(__file__)
+
+infile = "data.csv"
+outfile = "filtered_data.csv"
+
+path = lambda filename: os.path.join(fullpath, filename)
+
+# Data Load
 header = ['uC_timer', 'i', 'in_dac', 'in_real', 'out']
-data = pd.read_csv('RC_Circuit/data.csv', sep=';',decimal='.')
+data = pd.read_csv(path(infile), sep=';',decimal='.')
 data.columns.values[:] = header
 n = len(data)
 
