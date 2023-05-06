@@ -7,8 +7,8 @@ data = table2array(data);
 
 %% Asignamos variables
 t = data(:, 1);
-In = data(:, 4);
-Out = data(:, 5);
+In = data(:, 2);
+Out = data(:, 3);
 
 %% Guardamos la data
 save Data.mat In Out

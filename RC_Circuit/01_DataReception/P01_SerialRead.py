@@ -10,10 +10,10 @@ path = lambda filename: os.path.join(fullpath, filename)
 
 f = open(path(outfile), 'w', newline='')
 
-Arduino = ser.Serial('COM4', 115200)
+Arduino = ser.Serial('COM12', 115200)
 
 fs = 10 # Frecuencia de muestreo
-tf = 80 # Tiempo final
+tf = 300 # Tiempo final
 
 N = tf*fs + 1 # Número de muestras
 i = 0

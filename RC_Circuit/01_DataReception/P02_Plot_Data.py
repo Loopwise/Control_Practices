@@ -12,7 +12,7 @@ outfile = "filtered_data.csv"
 path = lambda filename: os.path.join(fullpath, filename)
 
 # Data Load
-header = ['uC_timer', 'i', 'in_dac', 'in_real', 'out']
+header = ['i', 'in_real', 'out']
 data = pd.read_csv(path(infile), sep=';',decimal='.', header = None, names = header)
 
 n = len(data)
@@ -31,8 +31,7 @@ for i in range(n):
         S[i] = alpha*out[i] + (1 - alpha)*S[i - 1]
 
 data_f = np.array([t, inp, S])
-data_f = pd.DataFrame(data_f.T,
-                    columns=['time', 'input', 'output'])
+data_f = pd.DataFrame(data_f.T, columns=['time', 'input', 'output'])
 data_f.to_csv(path(outfile), index = False)
 
 plt.plot(t, inp, 'black')
