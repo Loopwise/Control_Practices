@@ -13,8 +13,8 @@ path = lambda filename: os.path.join(fullpath, filename)
 
 # Data Load
 header = ['uC_timer', 'i', 'in_dac', 'in_real', 'out']
-data = pd.read_csv(path(infile), sep=';',decimal='.')
-data.columns.values[:] = header
+data = pd.read_csv(path(infile), sep=';',decimal='.', header = None, names = header)
+
 n = len(data)
 
 t = np.array(data['i'])
@@ -33,7 +33,7 @@ for i in range(n):
 data_f = np.array([t, inp, S])
 data_f = pd.DataFrame(data_f.T,
                     columns=['time', 'input', 'output'])
-data_f.to_csv('RC_Circuit/filtered_data.csv', index = False)
+data_f.to_csv(path(outfile), index = False)
 
 plt.plot(t, inp, 'black')
 plt.plot(t, out, 'blue')
