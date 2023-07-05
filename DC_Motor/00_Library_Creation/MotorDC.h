@@ -12,7 +12,7 @@
 class MotorDC{
 private:
   byte EN1, EN2, ENM;
-  byte ENCA, ENCB;
+  Encoder *myEnc = new Encoder(100, 100);
   unsigned int t = 0;
   int pos_diff = 0;
   float CPR, velocity = 0;
