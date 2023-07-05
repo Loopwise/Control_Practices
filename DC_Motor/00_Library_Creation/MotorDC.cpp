@@ -41,22 +41,24 @@ void MotorDC::update_States(){
 
   this -> RPM = pos_diff/(this -> CPR); // Revoluciones en tms
   this -> RPM *= 60.0*1000.0/dt; // Revoluciones por Minuto
-  this -> velocity = 2.0*PI/60.0*(this -> RPM); // Rad/s
+  
   this -> t = millis();
 
   interrupts();
 }
 
 int MotorDC::get_RawPosition(){
-  return (this -> pos);
+  return this -> pos;
 }
 
+// Velocity (RPM)
 float MotorDC::get_RPM(){
   return this -> RPM;
 }
 
+// Velocity (Rad/s)
 float MotorDC::get_Velocity(){
-  return this -> velocity;
+  return 2.0*PI/60.0*(this -> RPM);
 }
 
 float MotorDC::get_Position(){
